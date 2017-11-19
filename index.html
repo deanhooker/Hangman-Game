@@ -34,7 +34,7 @@
 
             // words for game
             var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
-            var word;
+            var word = "";
             var underScores = "";
             var gameStart = false;
             var winsCount = 0;
@@ -46,6 +46,15 @@
                 //game begins
                 gameStart = true;
 
+                if (word.length = 0) {
+                    generateNewWord = true;
+                }
+
+                else {
+                    generateNewWord = false;
+                };
+
+                console.log("New word?"+generateNewWord);
                 //choose word from words array
                 if (generateNewWord = true) {
                 word = words[Math.floor(Math.random() * words.length)];
@@ -53,12 +62,16 @@
                 for (i = 0; i < word.length; i++) {
                     underScores = underScores + "_ ";
                 }
-                };
-
-
 
                 console.log(word);
                 console.log(underScores);
+                }
+
+                else {
+            
+
+                }
+
 
 
             

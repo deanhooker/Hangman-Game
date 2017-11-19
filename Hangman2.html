@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Hangman!</h1>
+    </div>
+    <div>
+        <p>Press any key to get started...</p>
+        <p>Wins:
+            <span id="wins-count">...</span>
+        </p>
+        <p>Current Word</p>
+        <p>
+            <span id="current-word">...</span>
+        </p>
+        <p>Number of guesses remaining:</p>
+        <p>
+            <span id="guesses-left">...</span>
+        </p>
+        <p>Letters already guessed</p>
+        <p>
+            <span id="letters-guessed">...</span>
+        </p>
+    </div>
+
+    <script type="text/javascript">
+
+        // words for game
+        var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
+        var word = "";
+        var underscores = [];
+        var gameStart = false;
+        var winsCount = 0;
+        var guessesLeft = 12;
+        var rightGuesses = [];
+        var wrongGuesses = [];
+
+        // choose random word
+
+        word = words[Math.floor(Math.random() * words.length)];
+        console.log(word);
+
+        // create underscores based on word length
+        var underscoreDoc = document.getElementById("current-word");
+
+        function generateUnderscores() {
+            for (i = 0; i < word.length; i++) {
+                underscores = underscores + "_ ";
+            };
+            return underscores
+        };
+
+        console.log(generateUnderscores());
+
+        // listen for userGuess
+
+        document.onkeyup = function(event) {
+            var userGuess = event.key;
+
+            if (word.indexOf(userGuess) > -1) {
+
+                rightGuesses.push(userGuess);
+
+                console.log(underscores);
+
+                // underscoreDoc[0].textContent = underscores.join(" ");
+
+                underscores[word.indexOf(userGuess)] = userGuess;
+
+                if (underscores.join("") == word) {
+                    alert("You Win!");
+                };
+            }
+            else {
+                wrongGuesses.push(userGuess);
+            }
+            console.log(wrongGuesses);
+
+
+
+
+
+
+
+document.getElementById("letters-guessed").textContent = wrongGuesses;
+
+
+
+        };
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
