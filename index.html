@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -12,25 +13,61 @@
     </div>
     <div>
         <p>Press any key to get started...</p>
-        <p>Wins
+        <p>Wins:
             <span id="wins-count">...</span>
         </p>
         <p>Current Word</p>
         <p>
             <span id="current-word">...</span>
         </p>
-        <p>Number of guesses remaining</p>
+        <p>Number of guesses remaining:</p>
         <p>
-            <span="guesses-left">...</span>
+            <span id="guesses-left">...</span>
         </p>
         <p>Letters already guessed</p>
         <p>
-            <span="letters-guessed">...</span>
+            <span id="letters-guessed">...</span>
         </p>
     </div>
 
     <script type="text/javascript">
-    
+
+            // words for game
+            var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
+            var word;
+            var underScores = "";
+            var gameStart = false;
+            var winsCount = 0;
+            var guessesLeft = 12;
+            var lettersGuessed = [];
+            var generateNewWord = false;
+
+            document.onkeyup = function(userkey) {
+                //game begins
+                gameStart = true;
+
+                //choose word from words array
+                if (generateNewWord = true) {
+                word = words[Math.floor(Math.random() * words.length)];
+
+                for (i = 0; i < word.length; i++) {
+                    underScores = underScores + "_ ";
+                }
+                };
+
+
+
+                console.log(word);
+                console.log(underScores);
+
+
+            
+
+        document.getElementById("wins-count").textContent = winsCount;
+        document.getElementById("guesses-left").textContent = guessesLeft;
+            };
+
+
     </script>
 </body>
 
