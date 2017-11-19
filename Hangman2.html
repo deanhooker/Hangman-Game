@@ -32,7 +32,8 @@
 
     <script type="text/javascript">
 
-        // words for game
+        // words for game + global variables
+        //================================================================================================
         var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
         var word = "";
         var underscores = [];
@@ -41,64 +42,86 @@
         var guessesLeft = 12;
         var rightGuesses = [];
         var wrongGuesses = [];
+        var lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
         // choose random word
+        //================================================================================================
+        function newWord() {
+            word = "";
+            underscores = [];
+            lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+            word = words[Math.floor(Math.random() * words.length)];
 
-        word = words[Math.floor(Math.random() * words.length)];
-        console.log(word);
+            // create underscores based on word length
+            //================================================================================================
 
-        // create underscores based on word length
-        var underscoreDoc = document.getElementById("current-word");
-
-        function generateUnderscores() {
-            for (i = 0; i < word.length; i++) {
-                underscores.push("_");
+            function generateUnderscores() {
+                for (i = 0; i < word.length; i++) {
+                    underscores.push("_");
+                };
+                return underscores
             };
-            return underscores
-        };
 
-        console.log(generateUnderscores());
-        document.getElementById("current-word").textContent = underscores.join(" ");
+
+
+            console.log(generateUnderscores());
+            console.log(word);
+
+            document.getElementById("current-word").textContent = underscores.join(" ");
+        };
+        newWord();
 
 
         // listen for userGuess
+        //================================================================================================
 
         document.onkeyup = function (event) {
             var userGuess = event.key;
 
+
             document.getElementById("guesses-left").textContent = guessesLeft;
 
-            if (word.indexOf(userGuess) > -1) {
-
-                rightGuesses.push(userGuess);
-
-                underscores[word.indexOf(userGuess)] = userGuess;
-
-                console.log(underscores);
-
-                document.getElementById("current-word").textContent = underscores.join(" ");
-
-                if (underscores.join("") == word) {
-                    winsCount++;
-                    alert("You Win!");
-                };
-            }
-            else {
-                guessesLeft--;
-                wrongGuesses.push(userGuess);
-            }
-            console.log(wrongGuesses);
+            // only allow letter keys and only once
+            if (lettersLeft.indexOf(userGuess) != -1) {
+                lettersLeft.splice(lettersLeft.indexOf(userGuess), 1);
 
 
+                //if guess is correct push into underscores, win
+                if (word.indexOf(userGuess) > -1) {
+
+                    rightGuesses.push(userGuess);
+
+                    underscores[word.indexOf(userGuess)] = userGuess;
+
+                    console.log(underscores);
+
+                    document.getElementById("current-word").textContent = underscores.join(" ");
+
+                    if (underscores.join("") == word) {
+                        winsCount++;
+                        alert("You Win!");
+                        newWord();
+                    };
+                }
+                //if guess is wrong lose a life and lose game
+                else {
+                    guessesLeft--;
+                    wrongGuesses.push(userGuess);
+
+                    if (guessesLeft == 0) {
+                        alert("You Lost!");
+                        newWord();
+                    }
+                }
+
+                console.log(wrongGuesses);
+
+                document.getElementById("wins-count").textContent = winsCount;
+                document.getElementById("guesses-left").textContent = guessesLeft;
+                document.getElementById("letters-guessed").textContent = wrongGuesses.join(", ");
 
 
-
-            document.getElementById("wins-count").textContent = winsCount;
-            document.getElementById("guesses-left").textContent = guessesLeft;
-            document.getElementById("letters-guessed").textContent = wrongGuesses;
-
-
-
+            };
         };
 
 
