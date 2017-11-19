@@ -35,20 +35,20 @@
         // words for game + global variables
         //================================================================================================
         var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
-        var word = "";
-        var underscores = [];
+        var word;;
+        var underscores;
         var gameStart = false;
         var winsCount = 0;
-        var guessesLeft = 12;
-        var rightGuesses = [];
-        var wrongGuesses = [];
-        var lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        var guessesLeft;
+        var wrongGuesses;
+        var lettersLeft;
 
         // choose random word
         //================================================================================================
         function newWord() {
-            word = "";
             underscores = [];
+            guessesLeft = 12;
+            wrongGuesses = [];
             lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
             word = words[Math.floor(Math.random() * words.length)];
 
@@ -89,8 +89,6 @@
                 //if guess is correct push into underscores, win
                 if (word.indexOf(userGuess) > -1) {
 
-                    rightGuesses.push(userGuess);
-
                     underscores[word.indexOf(userGuess)] = userGuess;
 
                     console.log(underscores);
@@ -113,8 +111,6 @@
                         newWord();
                     }
                 }
-
-                console.log(wrongGuesses);
 
                 document.getElementById("wins-count").textContent = winsCount;
                 document.getElementById("guesses-left").textContent = guessesLeft;
