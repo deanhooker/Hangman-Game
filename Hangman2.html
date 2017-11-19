@@ -52,33 +52,39 @@
 
         function generateUnderscores() {
             for (i = 0; i < word.length; i++) {
-                underscores = underscores + "_ ";
+                underscores.push("_");
             };
             return underscores
         };
 
         console.log(generateUnderscores());
+        document.getElementById("current-word").textContent = underscores.join(" ");
+
 
         // listen for userGuess
 
-        document.onkeyup = function(event) {
+        document.onkeyup = function (event) {
             var userGuess = event.key;
+
+            document.getElementById("guesses-left").textContent = guessesLeft;
 
             if (word.indexOf(userGuess) > -1) {
 
                 rightGuesses.push(userGuess);
 
-                console.log(underscores);
-
-                // underscoreDoc[0].textContent = underscores.join(" ");
-
                 underscores[word.indexOf(userGuess)] = userGuess;
 
+                console.log(underscores);
+
+                document.getElementById("current-word").textContent = underscores.join(" ");
+
                 if (underscores.join("") == word) {
+                    winsCount++;
                     alert("You Win!");
                 };
             }
             else {
+                guessesLeft--;
                 wrongGuesses.push(userGuess);
             }
             console.log(wrongGuesses);
@@ -87,9 +93,9 @@
 
 
 
-
-
-document.getElementById("letters-guessed").textContent = wrongGuesses;
+            document.getElementById("wins-count").textContent = winsCount;
+            document.getElementById("guesses-left").textContent = guessesLeft;
+            document.getElementById("letters-guessed").textContent = wrongGuesses;
 
 
 
