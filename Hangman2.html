@@ -56,7 +56,7 @@
 
         // words for game + global variables
         //================================================================================================
-        var words = ['gravity', 'froozen', 'argo', 'birdman', 'milk', 'fargo', 'misery', 'aliens', 'rocky', 'jaws'];
+        var words = ['moonlight', 'spotlight', 'birdman', 'argo', 'juno', 'chicago', 'aliens', 'rocky', 'jaws', 'gladiator', 'shrek', 'avatar', 'up', 'inception', 'lincoln', 'interstellar', 'zootopia', 'room', 'cinderella', 'moana', 'superbad', 'fargo', 'aladdin'];
         var word;;
         var underscores;
         var gameStart = false;
@@ -71,7 +71,7 @@
             underscores = [];
             guessesLeft = 12;
             wrongGuesses = [];
-            lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+            lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "];
             word = words[Math.floor(Math.random() * words.length)];
 
             // create underscores based on word length
@@ -88,6 +88,10 @@
             console.log(word);
 
             document.getElementById("current-word").textContent = underscores.join(" ");
+            document.getElementById("wins-count").textContent = winsCount;
+            document.getElementById("letters-guessed").textContent = wrongGuesses;
+            document.getElementById("guesses-left").textContent = guessesLeft;
+
         };
         newWord();
 
@@ -109,12 +113,14 @@
                 for (i = 0; i < word.length; i++) {
                     if (userGuess === word[i]) {
                         underscores[i] = userGuess;
-                        document.getElementById("current-word").innerHTML = underscores.join(" ");
+                        document.getElementById("current-word").textContent = underscores.join(" ");
                         found = true;
+
+                        console.log(underscores);
 
                         if (underscores.indexOf("_") == -1) {
                             winsCount++;
-                            alert("You Win!");
+                            // alert("You Win!");
                             newWord();
                         }
                     }
@@ -130,6 +136,7 @@
                     wrongGuesses.push(userGuess);
                     guessesLeft--;
                     document.getElementById("letters-guessed").innerHTML = wrongGuesses.join(" ");
+                    document.getElementById("guesses-left").textContent = guessesLeft;
                 
 
                     if (guessesLeft == 0) {
@@ -137,24 +144,8 @@
                         newWord();
                     }
                 }
-
-
-
-                // document.getElementById("current-word").textContent = underscores.join(" ");
-                document.getElementById("wins-count").textContent = winsCount;
-                document.getElementById("guesses-left").textContent = guessesLeft;
-                // document.getElementById("letters-guessed").textContent = wrongGuesses.join(", ");
-
-
             };
-
-
         };
-
-
-
-
-
 
     </script>
 </body>
