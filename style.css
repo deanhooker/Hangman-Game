@@ -1,0 +1,20 @@
+body {
+    background-image: url(http://www.jeffanderin.us//images/CinemaBackground.jpg);
+    background-size: cover;
+}
+
+.white-background {
+    background-color: black;
+    color: white;
+    height: 460px;
+}
+
+.center-this {
+    text-align: center;
+    color: #C79F27;
+    font-family: "futura book legacy","FuturaPT-Book",Futura,"Trebuchet MS",Arial,sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+}

@@ -6,50 +6,55 @@
     <title>Hangman</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Hangman!</h1>
-            <h2>Single Word Movie Titles</h2>
-        </div>
+
+    <div class="container center-this">
+        <h1>HANGMAN!</h1>
+        <h2>Single Word Movie Titles</h2>
     </div>
-    <div class="container-fluid">
-        <h3>
-            <p>Press any key to get started...</p>
-        </h3>
-        <p>
-            <h3>Wins: </h3>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3 white-background">
+            <span id="last-movie-guessed"></span>
+        </div>
+        <div class="col-md-3 white-background">
             <h3>
-                <span id="wins-count">...</span>
+                <p>Press any key to get started!</p>
             </h3>
-        </p>
-        <p>
-            <h3>Current Word</h3>
-        </p>
-        <p>
-            <h3>
-                <span id="current-word">...</span>
-            </h3>
-        </p>
-        <p>
-            <h3>Number of guesses remaining:</h3>
-        </p>
-        <p>
-            <h3>
-                <span id="guesses-left">...</span>
-            </h3>
-        </p>
-        <p>
-            <h3>Letters already guessed</h3>
-        </p>
-        <p>
-            <h3>
-                <span id="letters-guessed">...</span>
-            </h3>
-        </p>
+            <p>
+                <h3>Wins: </h3>
+                <h3>
+                    <span id="wins-count">...</span>
+                </h3>
+            </p>
+            <p>
+                <h3>Current Word</h3>
+            </p>
+            <p>
+                <h3>
+                    <span id="current-word">...</span>
+                </h3>
+            </p>
+            <p>
+                <h3>Number of guesses remaining:</h3>
+            </p>
+            <p>
+                <h3>
+                    <span id="guesses-left">...</span>
+                </h3>
+            </p>
+            <p>
+                <h3>Letters already guessed</h3>
+            </p>
+            <p>
+                <h3>
+                    <span id="letters-guessed">...</span>
+                </h3>
+            </p>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -59,17 +64,16 @@
         var words = ['moonlight', 'spotlight', 'birdman', 'argo', 'juno', 'chicago', 'aliens', 'rocky', 'jaws', 'gladiator', 'shrek', 'avatar', 'up', 'inception', 'lincoln', 'interstellar', 'zootopia', 'room', 'cinderella', 'moana', 'superbad', 'fargo', 'aladdin'];
         var word;;
         var underscores;
-        var gameStart = false;
         var winsCount = 0;
         var guessesLeft;
         var wrongGuesses;
         var lettersLeft;
 
-        // choose random word
+        // set up new game by generating random word and resetting variables
         //================================================================================================
         function newWord() {
             underscores = [];
-            guessesLeft = 12;
+            guessesLeft = 10;
             wrongGuesses = [];
             lettersLeft = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "];
             word = words[Math.floor(Math.random() * words.length)];
@@ -93,6 +97,7 @@
             document.getElementById("guesses-left").textContent = guessesLeft;
 
         };
+        // newWord() runs during intial load
         newWord();
 
 
@@ -120,7 +125,12 @@
 
                         if (underscores.indexOf("_") == -1) {
                             winsCount++;
-                            // alert("You Win!");
+
+                            var newDiv = document.createElement("div");
+                            newDiv.innerHTML = word;
+                            document.getElementById("last-movie-guessed").appendChild(newDiv); //movie guessed appears to left of game
+                           
+                            words.splice(words.indexOf(word), 1); //can't guess same movie twice
                             newWord();
                         }
                     }
@@ -128,7 +138,7 @@
                 //now all letters have been checked, was any found
                 if (found) return; //if yes return
 
-  
+
 
                 //if guess is wrong lose a life and lose game
 
@@ -137,7 +147,7 @@
                     guessesLeft--;
                     document.getElementById("letters-guessed").innerHTML = wrongGuesses.join(" ");
                     document.getElementById("guesses-left").textContent = guessesLeft;
-                
+
 
                     if (guessesLeft == 0) {
                         alert("You Lost!");
