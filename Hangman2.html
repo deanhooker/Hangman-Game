@@ -4,29 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div>
-        <h1>Hangman!</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hangman!</h1>
+            <h2>Single Word Movie Titles</h2>
+        </div>
     </div>
-    <div>
-        <p>Press any key to get started...</p>
-        <p>Wins:
-            <span id="wins-count">...</span>
-        </p>
-        <p>Current Word</p>
+    <div class="container-fluid">
+        <h3>
+            <p>Press any key to get started...</p>
+        </h3>
         <p>
-            <span id="current-word">...</span>
+            <h3>Wins: </h3>
+            <h3>
+                <span id="wins-count">...</span>
+            </h3>
         </p>
-        <p>Number of guesses remaining:</p>
         <p>
-            <span id="guesses-left">...</span>
+            <h3>Current Word</h3>
         </p>
-        <p>Letters already guessed</p>
         <p>
-            <span id="letters-guessed">...</span>
+            <h3>
+                <span id="current-word">...</span>
+            </h3>
+        </p>
+        <p>
+            <h3>Number of guesses remaining:</h3>
+        </p>
+        <p>
+            <h3>
+                <span id="guesses-left">...</span>
+            </h3>
+        </p>
+        <p>
+            <h3>Letters already guessed</h3>
+        </p>
+        <p>
+            <h3>
+                <span id="letters-guessed">...</span>
+            </h3>
         </p>
     </div>
 
@@ -34,7 +56,7 @@
 
         // words for game + global variables
         //================================================================================================
-        var words = ['gladiator', 'chicago', 'argo', 'birdman', 'moonlight', 'spotlight'];
+        var words = ['gravity', 'froozen', 'argo', 'birdman', 'milk', 'fargo', 'misery', 'aliens', 'rocky', 'jaws'];
         var word;;
         var underscores;
         var gameStart = false;
@@ -62,8 +84,6 @@
                 return underscores
             };
 
-
-
             console.log(generateUnderscores());
             console.log(word);
 
@@ -76,7 +96,7 @@
         //================================================================================================
 
         document.onkeyup = function (event) {
-            var userGuess = event.key;
+            var userGuess = event.key.toLowerCase();
 
 
             document.getElementById("guesses-left").textContent = guessesLeft;
@@ -85,26 +105,32 @@
             if (lettersLeft.indexOf(userGuess) != -1) {
                 lettersLeft.splice(lettersLeft.indexOf(userGuess), 1);
 
+                var found = false; //lets use bool to check if a letter was found
+                for (i = 0; i < word.length; i++) {
+                    if (userGuess === word[i]) {
+                        underscores[i] = userGuess;
+                        document.getElementById("current-word").innerHTML = underscores.join(" ");
+                        found = true;
 
-                //if guess is correct push into underscores, win
-                if (word.indexOf(userGuess) > -1) {
-
-                    underscores[word.indexOf(userGuess)] = userGuess;
-
-                    console.log(underscores);
-
-                    document.getElementById("current-word").textContent = underscores.join(" ");
-
-                    if (underscores.join("") == word) {
-                        winsCount++;
-                        alert("You Win!");
-                        newWord();
-                    };
+                        if (underscores.indexOf("_") == -1) {
+                            winsCount++;
+                            alert("You Win!");
+                            newWord();
+                        }
+                    }
                 }
+                //now all letters have been checked, was any found
+                if (found) return; //if yes return
+
+  
+
                 //if guess is wrong lose a life and lose game
-                else {
-                    guessesLeft--;
+
+                if (wrongGuesses.indexOf(userGuess) < 0) {
                     wrongGuesses.push(userGuess);
+                    guessesLeft--;
+                    document.getElementById("letters-guessed").innerHTML = wrongGuesses.join(" ");
+                
 
                     if (guessesLeft == 0) {
                         alert("You Lost!");
@@ -112,12 +138,17 @@
                     }
                 }
 
+
+
+                // document.getElementById("current-word").textContent = underscores.join(" ");
                 document.getElementById("wins-count").textContent = winsCount;
                 document.getElementById("guesses-left").textContent = guessesLeft;
-                document.getElementById("letters-guessed").textContent = wrongGuesses.join(", ");
+                // document.getElementById("letters-guessed").textContent = wrongGuesses.join(", ");
 
 
             };
+
+
         };
 
 
